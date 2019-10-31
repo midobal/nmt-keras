@@ -55,8 +55,6 @@ def get_coco_score(pred_list, verbose, extra_vars, split):
         (Rouge(), "ROUGE_L"),
         (Cider(), "CIDEr")
     ]
-    if extra_vars.get('language', 'en') in accepted_langs:
-        scorers.append((Meteor(language=extra_vars.get('language', 'en')), "METEOR"))
 
     final_scores = {}
     for scorer, method in scorers:
