@@ -10,11 +10,11 @@ def load_parameters():
     DATASET_NAME = TASK_NAME                        # Dataset name.
     SRC_LAN = 'es'                                  # Language of the source text.
     TRG_LAN = 'en'                                  # Language of the target text.
-    DATA_ROOT_PATH = 'examples/%s/' % DATASET_NAME  # Path where data is stored.
+    DATA_ROOT_PATH = '../Practica2/Data/%s/' % DATASET_NAME  # Path where data is stored.
 
     # SRC_LAN or TRG_LAN will be added to the file names.
     TEXT_FILES = {'train': 'training.',             # Data files.
-                  'val': 'dev.',
+                  'val': 'development.',
                   'test': 'test.'}
 
     GLOSSARY = None                               # Glossary location. If not None, it overwrites translations according to this glossary file
@@ -125,7 +125,7 @@ def load_parameters():
 
     OPTIMIZER = 'Adam'                            # Optimizer. Supported optimizers: SGD, RMSprop, Adagrad, Adadelta, Adam, Adamax, Nadam.
     LR = 0.001                                    # Learning rate. Recommended values - Adam 0.0002 - Adadelta 1.0.
-    CLIP_C = 5.                                   # During training, clip L2 norm of gradients to this value (0. means deactivated).
+    CLIP_C = 1.                                   # During training, clip L2 norm of gradients to this value (0. means deactivated).
     CLIP_V = 0.                                   # During training, clip absolute value of gradients to this value (0. means deactivated).
     USE_TF_OPTIMIZER = True                       # Use native Tensorflow's optimizer (only for the Tensorflow backend).
 
@@ -148,13 +148,13 @@ def load_parameters():
                                                   # Linear reduction: new_lr = lr * LR_GAMMA
                                                   # Exponential reduction: new_lr = lr * LR_REDUCER_EXP_BASE ** (current_nb / LR_HALF_LIFE) * LR_GAMMA
                                                   # Noam reduction: new_lr = lr * min(current_nb ** LR_REDUCER_EXP_BASE, current_nb * LR_HALF_LIFE ** WARMUP_EXP)
-    LR_REDUCER_EXP_BASE = -0.5                    # Base for the exponential decay.
-    LR_HALF_LIFE = 100                            # Factor/warmup steps for exponenital/noam decay.
+    LR_REDUCER_EXP_BASE = 0.5                    # Base for the exponential decay.
+    LR_HALF_LIFE = 5000                            # Factor/warmup steps for exponenital/noam decay.
     WARMUP_EXP = -1.5                             # Warmup steps for noam decay.
     MIN_LR = 1e-9                                 # Minimum value allowed for the decayed LR
 
     # Training parameters
-    MAX_EPOCH = 500                               # Stop when computed this number of epochs.
+    MAX_EPOCH = 5                               # Stop when computed this number of epochs.
     BATCH_SIZE = 50                               # Size of each minibatch.
     N_GPUS = 1                                    # Number of GPUs to use. Only for Tensorflow backend. Each GPU will receive mini-batches of BATCH_SIZE / N_GPUS.
 
@@ -167,7 +167,7 @@ def load_parameters():
 
     # Early stop parameters
     EARLY_STOP = True                             # Turns on/off the early stop protocol.
-    PATIENCE = 10                                 # We'll stop if the val STOP_METRIC does not improve after this.
+    PATIENCE = 20                                 # We'll stop if the val STOP_METRIC does not improve after this.
                                                   # number of evaluations.
     STOP_METRIC = 'Bleu_4'                        # Metric for the stop.
     MIN_DELTA = 0.                                # Minimum change in the monitored quantity to consider it as an improvement.
@@ -186,13 +186,13 @@ def load_parameters():
     INNER_INIT = 'orthogonal'                     # Initialization function for inner RNN matrices.
     INIT_ATT = 'glorot_uniform'                   # Initialization function for attention mechism matrices
 
-    SOURCE_TEXT_EMBEDDING_SIZE = 32              # Source language word embedding size.
+    SOURCE_TEXT_EMBEDDING_SIZE = 64              # Source language word embedding size.
     SRC_PRETRAINED_VECTORS = None                 # Path to pretrained vectors (e.g.: DATA_ROOT_PATH + '/DATA/word2vec.%s.npy' % SRC_LAN).
                                                   # Set to None if you don't want to use pretrained vectors.
                                                   # When using pretrained word embeddings. this parameter must match with the word embeddings size
     SRC_PRETRAINED_VECTORS_TRAINABLE = True       # Finetune or not the target word embedding vectors.
 
-    TARGET_TEXT_EMBEDDING_SIZE = 32               # Source language word embedding size.
+    TARGET_TEXT_EMBEDDING_SIZE = 64               # Source language word embedding size.
     TRG_PRETRAINED_VECTORS = None                 # Path to pretrained vectors. (e.g. DATA_ROOT_PATH + '/DATA/word2vec.%s.npy' % TRG_LAN)
                                                   # Set to None if you don't want to use pretrained vectors.
                                                   # When using pretrained word embeddings, the size of the pretrained word embeddings must match with the word embeddings size.
@@ -215,14 +215,14 @@ def load_parameters():
     # AttentionRNNEncoderDecoder model hyperparameters
     # # # # # # # # # # # # # # # # # # # # # # # #
     ENCODER_RNN_TYPE = 'LSTM'                     # Encoder's RNN unit type ('LSTM' and 'GRU' supported).
-    USE_CUDNN = True                              # Use CuDNN's implementation of GRU and LSTM (only for Tensorflow backend).
+    USE_CUDNN = False                              # Use CuDNN's implementation of GRU and LSTM (only for Tensorflow backend).
 
     DECODER_RNN_TYPE = 'ConditionalLSTM'          # Decoder's RNN unit type.
                                                   # ('LSTM', 'GRU', 'ConditionalLSTM' and 'ConditionalGRU' supported).
     ATTENTION_MODE = 'add'                        # Attention mode. 'add' (Bahdanau-style), 'dot' (Luong-style) or 'scaled-dot'.
 
     # Encoder configuration
-    ENCODER_HIDDEN_SIZE = 32                      # For models with RNN encoder.
+    ENCODER_HIDDEN_SIZE = 64                      # For models with RNN encoder.
     BIDIRECTIONAL_ENCODER = True                  # Use bidirectional encoder.
     BIDIRECTIONAL_DEEP_ENCODER = True             # Use bidirectional encoder in all encoding layers.
     BIDIRECTIONAL_MERGE_MODE = 'concat'           # Merge function for bidirectional layers.
@@ -233,7 +233,7 @@ def load_parameters():
     INIT_LAYERS = ['tanh']
 
     # Decoder configuration
-    DECODER_HIDDEN_SIZE = 32                      # For models with RNN decoder.
+    DECODER_HIDDEN_SIZE = 64                      # For models with RNN decoder.
     ATTENTION_SIZE = DECODER_HIDDEN_SIZE
 
     # Skip connections parameters
@@ -260,7 +260,7 @@ def load_parameters():
     RECURRENT_DROPOUT_P = 0.                      # Percentage of units to drop in recurrent layers.
     ATTENTION_DROPOUT_P = 0.                      # Percentage of units to drop in attention layers (0 means no dropout).
 
-    USE_NOISE = False                              # Use gaussian noise during training.
+    USE_NOISE = True                              # Use gaussian noise during training.
     NOISE_AMOUNT = 0.01                           # Amount of noise.
 
     USE_BATCH_NORMALIZATION = True                # If True it is recommended to deactivate Dropout.
