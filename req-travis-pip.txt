@@ -4,7 +4,6 @@ future
 flaky
 keras_applications
 keras_preprocessing
-multimodal-keras-wrapper
 sacremoses
 pytest
 pytest-cache
