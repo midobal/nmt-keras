@@ -12,3 +12,4 @@ pytest-forked
 pytest-pep8
 pytest-xdist
 pyux
+pyyaml
