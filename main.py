@@ -3,9 +3,10 @@ from __future__ import print_function
 import argparse
 import ast
 import logging
+from config import load_parameters
+from importlib.machinery import SourceFileLoader
 
 from keras_wrapper.extra.read_write import pkl2dict
-from config import load_parameters
 from utils.utils import update_parameters
 from nmt_keras import check_params
 from nmt_keras.training import train_model
@@ -15,7 +16,7 @@ logger = logging.getLogger(__name__)
 
 def parse_args():
     parser = argparse.ArgumentParser("Train or sample NMT models")
-    parser.add_argument("-c", "--config", required=False, help="Config pkl for loading the model configuration. "
+    parser.add_argument("-c", "--config", required=False, help="Config for loading the model configuration. "
                                                                "If not specified, hyperparameters "
                                                                "are read from config.py")
     parser.add_argument("-ds", "--dataset", required=False, help="Dataset instance with data")
@@ -27,9 +28,11 @@ def parse_args():
 
 if __name__ == "__main__":
     args = parse_args()
-    parameters = load_parameters()
     if args.config is not None:
-        parameters = update_parameters(parameters, pkl2dict(args.config))
+        config = SourceFileLoader("load_parameters", args.config).load_module()
+        parameters = config.load_parameters()
+    else:
+        parameters = load_parameters()
     try:
         for arg in args.changes:
             try:
