@@ -1,8 +1,8 @@
 # NMT-Keras
 
-[![Documentation](https://readthedocs.org/projects/nmt-keras/badge/?version=latest)](https://nmt-keras.readthedocs.io) [![Build Status](https://travis-ci.org/lvapeab/nmt-keras.svg?branch=master)](https://travis-ci.org/lvapeab/nmt-keras) [![Requirements Status](https://requires.io/github/lvapeab/nmt-keras/requirements.svg?branch=master)](https://requires.io/github/lvapeab/nmt-keras/requirements/?branch=master) ![Compatibility](https://img.shields.io/badge/Python-3.6-blue.svg) [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/lvapeab/nmt-keras/blob/master/LICENSE)
+[![Documentation](https://readthedocs.org/projects/nmt-keras/badge/?version=latest)](https://nmt-keras.readthedocs.io) [![Build Status](https://travis-ci.org/lvapeab/nmt-keras.svg?branch=master)](https://travis-ci.org/lvapeab/nmt-keras) [![Open in colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/lvapeab/nmt-keras/blob/master/examples/tutorial.ipynb)  ![Compatibility](https://img.shields.io/badge/Python-3.7-blue.svg) [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/lvapeab/nmt-keras/blob/master/LICENSE)
 
-Neural Machine Translation with Keras (Theano and Tensorflow).
+Neural Machine Translation with Keras.
 
 Library documentation: [nmt-keras.readthedocs.io](https://nmt-keras.readthedocs.io)
 
@@ -53,15 +53,15 @@ Library documentation: [nmt-keras.readthedocs.io](https://nmt-keras.readthedocs.
     
 ## Installation
 
-Assuming that you have [pip](https://en.wikipedia.org/wiki/Pip_(package_manager)) installed, run:
+Assuming that you have [pip](https://en.wikipedia.org/wiki/Pip_(package_manager)) installed and updated (>18), run:
   
   ```bash
   git clone https://github.com/lvapeab/nmt-keras
   cd nmt-keras
-  pip install -r requirements.txt
+  pip install -e .
   ```
  
- for obtaining the required packages for running this library.
+ for installing the library.
  
 
 ### Requirements
@@ -70,13 +70,14 @@ NMT-Keras requires the following libraries:
 
  - [Our version of Keras](https://github.com/MarcBS/keras) (Recommended v. 2.0.7 or newer).
  - [Multimodal Keras Wrapper](https://github.com/lvapeab/multimodal_keras_wrapper) (v. 2.0 or newer). ([Documentation](http://marcbs.github.io/staged_keras_wrapper/) and [tutorial](http://marcbs.github.io/multimodal_keras_wrapper/tutorial.html)).
- - [Coco-caption evaluation package](https://github.com/lvapeab/coco-caption/tree/master/pycocoevalcap/) (Only required to perform evaluation). This package requires `java` (version 1.8.0 or newer).
 
 
 For accelerating the training and decoding on CUDA GPUs, you can optionally install:
 
  - [CuDNN](https://developer.nvidia.com/cudnn).
  - [CuPy](https://github.com/cupy/cupy).
+
+For evaluating with additional metrics (Meteor, TER, etc), you can use the [Coco-caption evaluation package](https://github.com/lvapeab/coco-caption/tree/master/pycocoevalcap/) and set `METRICS='coco'` in the `config.py` file. This package requires `java` (version 1.8.0 or newer).
 
 
 ## Usage
@@ -143,15 +144,11 @@ optional arguments:
  
  * In [examples/documentation/neural_machine_translation.pdf](https://github.com/lvapeab/nmt-keras/blob/master/examples/documentation/neural_machine_translation.pdf) you'll find an overview of an attentional NMT system.
 
- * In the [examples](https://github.com/lvapeab/nmt-keras/blob/master/examples/) folder you'll find some tutorials for running this library. They are expected to be followed in order:
-    
-    1) [Dataset set up](https://github.com/lvapeab/nmt-keras/blob/master/examples/1_dataset_tutorial.ipynb): Shows how to invoke and configure a Dataset instance for a translation problem.
-    
-    2) [Training tutorial](https://github.com/lvapeab/nmt-keras/blob/master/examples/2_training_tutorial.ipynb): Shows how to call a translation model, link it with the dataset object and construct calllbacks for monitorizing the training. 
-    
-    3) [Decoding tutorial](https://github.com/lvapeab/nmt-keras/blob/master/examples/3_decoding_tutorial.ipynb): Shows how to call a trained translation model and use it to translate new text. 
-
-    4) [NMT model tutorial](https://github.com/lvapeab/nmt-keras/blob/master/examples/4_nmt_model_tutorial.ipynb): Shows how to build a state-of-the-art NMT model with Keras in few (~50) lines. 
+ * In the [examples](https://github.com/lvapeab/nmt-keras/blob/master/examples/) folder you'll find  2 colab notebooks, explaining the basic usage of this library:
+ 
+ * An introduction to a complete NMT experiment: [![Open in colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/lvapeab/nmt-keras/blob/master/examples/tutorial.ipynb) 
+  * A dissected NMT model: [![Open in colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/lvapeab/nmt-keras/blob/master/examples/modeling_tutorial.ipynb) 
+ 
 
  * In the [examples/configs](https://github.com/lvapeab/nmt-keras/blob/master/examples/configs) folder you'll find two examples of configs for larger models.
 
@@ -200,7 +197,7 @@ To see other projects following the same philosophy and style of NMT-Keras, take
 
 ### Warning!
 
-There is a [known issue](https://github.com/Theano/Theano/issues/5994) with the `Theano` backend. When running `NMT-Keras`, it will show the following message:
+The `Theano` backend is not tested anymore, although it should work. There is a [known issue](https://github.com/Theano/Theano/issues/5994) with the `Theano` backend. When running `NMT-Keras`, it will show the following message:
 
 ```
 [...]
