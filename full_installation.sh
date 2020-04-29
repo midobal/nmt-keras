@@ -37,13 +37,13 @@ then
     >&2 echo "  -e env_name: create a new conda environment named env_name (default: install conda.)."
     exit 1
 fi
-	    
+
 if [[ ! -d "$installation_path" ]]
 then
     >&2 echo "Error: path $installation_path does not exist."
     exit 1
 fi
-    
+
 
 if [[ $install_conda == 1 && ("$PYTHONPATH" == *"conda"* || "$PATH" == *"conda"*) ]]
 then
@@ -94,11 +94,8 @@ fi
 ##########################
 # NMT-Keras requirements #
 ##########################
-conda install --file "$PTH"/nmt-keras/req-travis-conda.txt
-conda install mkl mkl-service
-pip install -r "$PTH"/nmt-keras/req-travis-pip.txt
-pip install tensorflow==1.14.0
-echo "Remember to refresh shell session and to add $PTH/nmt-keras/keras to PYTHONPATH."
+pip install --upgrade pip
+pip install -e "$PTH"/nmt-keras
 
 ##########################
 ### INMT  requirements ###
