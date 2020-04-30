@@ -1,3 +1,5 @@
+import os
+
 
 def load_parameters():
     """
@@ -10,7 +12,7 @@ def load_parameters():
     DATASET_NAME = TASK_NAME                        # Dataset name.
     SRC_LAN = 'es'                                  # Language of the source text.
     TRG_LAN = 'en'                                  # Language of the target text.
-    DATA_ROOT_PATH = '../Practica2/Data/%s/' % DATASET_NAME  # Path where data is stored.
+    DATA_ROOT_PATH = '%s/Practica2/Data/%s/' % (os.environ["TA"], DATASET_NAME)  # Path where data is stored.
 
     # SRC_LAN or TRG_LAN will be added to the file names.
     TEXT_FILES = {'train': 'training.',             # Data files.
@@ -316,7 +318,7 @@ def load_parameters():
 
     SAMPLING_SAVE_MODE = 'list'                        # 'list': Store in a text file, one sentence per line.
     PLOT_EVALUATION = False                            # If True, the evaluation will be plotted into the model folder.
-    
+
     VERBOSE = 1                                        # Verbosity level.
     RELOAD = 0                                         # If 0 start training from scratch, otherwise the model.
                                                        # Saved on epoch 'RELOAD' will be used.
