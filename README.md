@@ -3,14 +3,14 @@ Esta es una versión modificada para la realización de las prácticas de la asi
 
 ## Tabla de Contenidos
 
-* [Instalación](#instalacion)
-* [Definición de variables](#definicion-de-variables)
-* [Descripción de la red](#descripcion-de-la-red)
+* [Instalación](#instalación)
+* [Definición de variables](#definición-de-variables)
+* [Descripción de la red](#descripción-de-la-red)
 * [Entrenamiento](#entrenamiento)
-* [Traducción](#traduccion)
-* [Evaluación](#evaluacion)
-* [Ajuste de parámetros](#ajuste-de-parametros)
-* [Bibliografía](#bibliografia)
+* [Traducción](#traducción)
+* [Evaluación](#evaluación)
+* [Ajuste de parámetros](#ajuste-de-parámetros)
+* [Bibliografía](#bibliografía)
 
 
 ## Instalación
