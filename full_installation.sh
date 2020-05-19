@@ -96,6 +96,7 @@ fi
 ##########################
 pip install --upgrade pip
 pip install -e "$PTH"/nmt-keras
+pip install tensorflow-gpu==1.15.2
 
 ##########################
 ### INMT  requirements ###
@@ -105,5 +106,5 @@ then
     git clone --branch Interactive_NMT https://github.com/lvapeab/multimodal_keras_wrapper.git "$PTH"/Interactive_NMT
     export PYTHONPATH=$PYTHONPATH:"$PTH"/Interactive_NMT
     pip install -r "$PTH"/Interactive_NMT/requirements.txt
-    echo "Remember to add $PTH/Interactive_NMT to your PYTHONPATH."
+    echo "PYTHONPATH=\$PYTHONPATH:$PTH/Interactive_NMT" >> ~/.bashrc
 fi
