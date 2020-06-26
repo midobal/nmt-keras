@@ -131,6 +131,9 @@ def parse_args():
                                                       "\t 1: Debug messages."
                                                       "\t 2: Time monitoring messages.", type=int, default=0)
     parser.add_argument("-eos", "--eos-symbol", help="End-of-sentence symbol", type=str, default='/')
+    parser.add_argument("-cb", "--character-based",
+                        action='store_true', default=False, required=False,
+                        help="Activates character-based compatibility. ")
 
     return parser.parse_args()
 
@@ -138,7 +141,7 @@ def parse_args():
 class NMTSampler:
     def __init__(self, models, dataset, params, params_prediction, params_training, model_tokenize_f, model_detokenize_f, general_tokenize_f,
                  general_detokenize_f, mapping=None, word2index_x=None, word2index_y=None, index2word_y=None,
-                 excluded_words=None, unk_id=1, eos_symbol='/', online=False, verbose=0):
+                 excluded_words=None, unk_id=1, eos_symbol='/', online=False, verbose=0, character_based=False):
         """
         Builds an NMTSampler: An object containing models and dataset, for the interactive-predictive and adaptive framework.
         :param models:
@@ -181,6 +184,7 @@ class NMTSampler:
         self.word2index_y = word2index_y if word2index_y is not None else \
             dataset.vocabulary[params_prediction['OUTPUTS_IDS_DATASET'][0]]['words2idx']
         self.unk_id = unk_id
+        self.character_based = character_based
 
         self.interactive_beam_searcher = InteractiveBeamSearchSampler(self.models,
                                                                       self.dataset,
@@ -232,6 +236,8 @@ class NMTSampler:
         tokenization_start_time = time.time()
         tokenized_input = self.general_tokenize_f(source_sentence, escape=False)
         tokenized_input = self.model_tokenize_f(tokenized_input)
+        if self.character_based:
+            tokenized_input = ' '.join(['~_~' if c == ' ' else c for c in tokenized_input])
         tokenization_end_time = time.time()
         logger.log(2, 'tokenization time: %.6f' % (tokenization_end_time - tokenization_start_time))
         parse_input_start_time = time.time()
@@ -261,6 +267,8 @@ class NMTSampler:
             prefix_tokenization_start_time = time.time()
             tokenized_validated_prefix = self.general_tokenize_f(validated_prefix, escape=False)
             tokenized_validated_prefix = self.model_tokenize_f(tokenized_validated_prefix)
+            if self.character_based:
+                tokenized_validated_prefix = ' '.join(['~_~' if c == ' ' else c for c in tokenized_validated_prefix])
             prefix_tokenization_end_time = time.time()
             logger.log(2, 'prefix_tokenization time: %.6f' % (prefix_tokenization_end_time - prefix_tokenization_start_time))
 
@@ -347,6 +355,8 @@ class NMTSampler:
         hypothesis_detokenization_start_time = time.time()
         hypothesis = self.model_detokenize_f(hypothesis)
         hypothesis = self.general_detokenize_f(hypothesis, unescape=False)
+        if self.character_based:
+            hypothesis = ''.join(hypothesis.split()).replace('~_~', ' ')
         hypothesis_detokenization_end_time = time.time()
         logger.log(2, 'hypothesis_detokenization time: %.6f' % (hypothesis_detokenization_end_time - hypothesis_detokenization_start_time))
         generate_sample_end_time = time.time()
@@ -363,6 +373,8 @@ class NMTSampler:
         # Tokenize input
         tokenized_input = self.general_tokenize_f(source_sentence, escape=False)
         tokenized_input = self.model_tokenize_f(tokenized_input)
+        if self.character_based:
+            tokenized_input = ' '.join(['~_~' if c == ' ' else c for c in tokenized_input])
         src_seq = self.dataset.loadText([tokenized_input],
                                         vocabularies=self.dataset.vocabulary[self.params['INPUTS_IDS_DATASET'][0]],
                                         max_len=self.params['MAX_INPUT_TEXT_LEN'],
@@ -374,6 +386,8 @@ class NMTSampler:
         # Tokenize output
         tokenized_reference = self.general_tokenize_f(target_sentence, escape=False)
         tokenized_reference = self.model_tokenize_f(tokenized_reference)
+        if self.character_based:
+            tokenized_reference = ' '.join(['~_~' if c == ' ' else c for c in tokenized_reference])
 
         # Build inputs/outpus of the system
         state_below = self.dataset.loadText([tokenized_reference],
@@ -556,7 +570,8 @@ def main():
                                            tokenize_general, detokenize_general,
                                            mapping=mapping, word2index_x=word2index_x, word2index_y=word2index_y,
                                            index2word_y=index2word_y, eos_symbol=args.eos_symbol,
-                                           excluded_words=excluded_words, online=args.online, verbose=args.verbose)
+                                           excluded_words=excluded_words, online=args.online, verbose=args.verbose,
+                                           character_based=args.character_based)
 
     httpd.sampler = interactive_beam_searcher
 
