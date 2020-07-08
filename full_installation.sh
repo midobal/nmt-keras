@@ -31,11 +31,11 @@ wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O mi
 bash miniconda.sh -b -p "$PTH"/miniconda
 export PATH="$PTH/miniconda/bin:$PATH"
 hash -r
-conda config --set always_yes yes --set changeps1 no
-conda update -q conda
-conda info -a
-conda install --file "$PTH"/nmt-keras/req-travis-conda.txt
-conda install mkl mkl-service
+$PTH/miniconda/bin/conda config --set always_yes yes --set changeps1 no
+$PTH/miniconda/bin/conda update -q conda -n base
+$PTH/miniconda/bin/conda info -a
+$PTH/miniconda/bin/conda install -n base --file "$PTH"/nmt-keras/req-travis-conda.txt
+$PTH/miniconda/bin/conda install -n base mkl mkl-service
 pip install -r "$PTH"/nmt-keras/req-travis-pip.txt
 pip install tensorflow==1.14.0
 rm miniconda.sh
