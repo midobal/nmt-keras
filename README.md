@@ -45,6 +45,8 @@ Para el correcto uso de *NMT-Keras*, es necesario configurar las siguientes vari
 "$NMT"/nmt-keras/coco-caption:"$NMT"/nmt-keras/multimodal_keras_wrapper
 ```
 
+Nota: recordar que, por simplicidad, hemos asumido que el directorio "TA" se encuentra ubicado en el home. De no ser así, se deberá modificar ```$TA```.
+
 ## Descripción de la red
 
 En el fichero ```$NMT/nmt-keras/config.py``` está detallada la red que se va a utilizar. Por defecto, ésta se compone de:
