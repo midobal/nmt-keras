@@ -27,7 +27,7 @@ git clone --branch practica_TA https://github.com/midobal/nmt-keras.git "$PTH"/n
 ##########################
 # miniconda installation #
 ##########################
-wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
+wget https://repo.continuum.io/miniconda/Miniconda3-py37_4.8.3-Linux-x86_64.sh -O miniconda.sh;
 bash miniconda.sh -b -p "$PTH"/miniconda
 export PATH="$PTH/miniconda/bin:$PATH"
 hash -r
